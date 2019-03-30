@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="FINANCES_USER")
+@Table(name="finances_user")
 public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class User {
     @Column(name="CREATED_DATE")
     private Date createdDate;
 
-    @Column(name="CREATEDBY")
+    @Column(name="CREATED_BY")
     private String createdBy;
 
     public Long getUserId() {

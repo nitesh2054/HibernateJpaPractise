@@ -1,6 +1,7 @@
 package com.nitesh.data;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
@@ -13,14 +14,18 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory() {
         try {
             Configuration configuration = new Configuration();
+            StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder();
             configuration.addAnnotatedClass(User.class);
-            /*return configuration
-                    .buildSessionFactory(new StandardServiceRegistryBuilder()
-                            .build());*/
+            //remove configure for .properties file
+            configuration.configure("hibernate.cfg.xml");
             return configuration
-                    .buildSessionFactory(new StandardServiceRegistryBuilder()
-                            .applySettings(configuration.getProperties())
-                            .build());
+                    .buildSessionFactory(standardServiceRegistryBuilder
+                    .applySettings(configuration.getProperties())
+                    .build());
+          /*  return new Configuration().configure()
+                    .buildSessionFactory();*/
+
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("There was an error building the factory");
