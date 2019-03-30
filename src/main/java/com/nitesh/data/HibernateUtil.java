@@ -1,22 +1,29 @@
 package com.nitesh.data;
 
-import com.nitesh.data.entities.User;
 import org.hibernate.SessionFactory;
-
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import com.nitesh.data.entities.User;
+
 public class HibernateUtil {
+
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
-        try{
+        try {
             Configuration configuration = new Configuration();
             configuration.addAnnotatedClass(User.class);
-            return configuration.buildSessionFactory(new StandardServiceRegistryBuilder().build());
-        }catch(Exception e){
+            /*return configuration
+                    .buildSessionFactory(new StandardServiceRegistryBuilder()
+                            .build());*/
+            return configuration
+                    .buildSessionFactory(new StandardServiceRegistryBuilder()
+                            .applySettings(configuration.getProperties())
+                            .build());
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("There was an error building the session factory");
+            throw new RuntimeException("There was an error building the factory");
         }
     }
 
