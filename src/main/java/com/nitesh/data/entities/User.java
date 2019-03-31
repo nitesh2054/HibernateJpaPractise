@@ -7,7 +7,13 @@ import java.util.Date;
 @Table(name="finances_user")
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   /* @GeneratedValue(strategy= GenerationType.TABLE, generator = "user_table_generator")
+    @TableGenerator(name = "user_table_generator",
+            table = "ifinances_keys",pkColumnName = "PK_NAME",pkColumnValue ="PK_VALUE")*/
+    //for oracle ; not possible in mysql
+    /*@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "user_seq")
+    @SequenceGenerator(name = "user_seq",sequenceName = "USER_ID_SEQ")*/
     @Column(name="USER_ID")
     private Long userId;
 

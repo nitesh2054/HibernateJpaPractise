@@ -13,7 +13,7 @@ public class Application {
             session.getTransaction().begin();
 
             User user = new User();
-            user.setBirthDate(null);
+            user.setBirthDate(new Date());
             user.setCreatedBy("Nitesh");
             user.setCreatedDate(new Date());
             user.setEmailAddress("lognitesh97@gmail.com");
@@ -23,12 +23,6 @@ public class Application {
             user.setLastUpdatedDate(new Date());
 
             session.save(user);
-            session.getTransaction().commit();
-
-            session.beginTransaction();
-            User dbUser = (User) session.get(User.class, user.getUserId());
-            dbUser.setFirstName("Joe");
-            session.update(dbUser);
 
             session.getTransaction().commit();
             session.close();
