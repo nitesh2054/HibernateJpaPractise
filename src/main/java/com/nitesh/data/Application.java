@@ -8,22 +8,32 @@ import java.util.Date;
 public class Application {
     public static void main(String [] args){
         Session session = HibernateUtil.getSessionFactory().openSession();
-       // session.beginTransaction();
-        session.getTransaction().begin();
+        try {
+            // session.beginTransaction();
+            session.getTransaction().begin();
 
-        User user = new User();
-        user.setBirthDate(new Date());
-        user.setCreatedBy("Nitesh");
-        user.setCreatedDate(new Date());
-        user.setEmailAddress("lognitesh97@gmail.com");
-        user.setFirstName("Nitesh");
-        user.setLastName("Paudel");
-        user.setLastUpdatedBy("Nitesh");
-        user.setLastUpdatedDate(new Date());
+            User user = new User();
+            user.setBirthDate(null);
+            user.setCreatedBy("Nitesh");
+            user.setCreatedDate(new Date());
+            user.setEmailAddress("lognitesh97@gmail.com");
+            user.setFirstName("Nitesh");
+            user.setLastName("Paudel");
+            user.setLastUpdatedBy("Nitesh");
+            user.setLastUpdatedDate(new Date());
 
-        session.save(user);
+            session.save(user);
+            session.getTransaction().commit();
 
-        //session.getTransaction().commit();
-        session.close();
+            session.beginTransaction();
+            User dbUser = (User) session.get(User.class, user.getUserId());
+            dbUser.setFirstName("Joe");
+            session.update(dbUser);
+
+            session.getTransaction().commit();
+            session.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

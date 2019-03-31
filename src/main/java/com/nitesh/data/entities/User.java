@@ -5,31 +5,37 @@ import java.util.Date;
 
 @Entity
 @Table(name="finances_user")
-//Access Property anotation
-@Access(value = AccessType.PROPERTY)
 public class User {
-
-    private Long userId;
-
-    private String firstName;
-
-    private String lastName;
-
-    private Date birthDate;
-
-    private String emailAddress;
-
-    private Date lastUpdatedDate;
-
-    private String lastUpdatedBy;
-
-    private Date createdDate;
-
-    private String createdBy;
-
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="USER_ID")
+    private Long userId;
+
+    @Column(name="FIRST_NAME")
+    private String firstName;
+
+    @Column(name="LAST_NAME")
+    private String lastName;
+
+    //@Basic
+    @Column(name = "BIRTH_DATE", nullable = false)
+    private Date birthDate;
+
+    @Column(name="EMAIL_ADDRESS")
+    private String emailAddress;
+
+    @Column(name="LAST_UPDATED_DATE")
+    private Date lastUpdatedDate;
+
+    @Column(name="LAST_UPDATED_BY")
+    private String lastUpdatedBy;
+
+    @Column(name="CREATED_DATE",updatable = false)
+    private Date createdDate;
+
+    @Column(name="CREATED_BY", updatable = false)
+    private String createdBy;
+
     public Long getUserId() {
         return userId;
     }
@@ -38,7 +44,6 @@ public class User {
         this.userId = userId;
     }
 
-    @Column(name="FIRST_NAME")
     public String getFirstName() {
         return firstName;
     }
@@ -47,7 +52,6 @@ public class User {
         this.firstName = firstName;
     }
 
-    @Column(name="LAST_NAME")
     public String getLastName() {
         return lastName;
     }
@@ -56,7 +60,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    @Column(name = "BIRTH_DATE")
     public Date getBirthDate() {
         return birthDate;
     }
@@ -65,7 +68,6 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    @Column(name="EMAIL_ADDRESS")
     public String getEmailAddress() {
         return emailAddress;
     }
@@ -74,7 +76,6 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
-    @Column(name="LAST_UPDATED_DATE")
     public Date getLastUpdatedDate() {
         return lastUpdatedDate;
     }
@@ -83,7 +84,6 @@ public class User {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
-    @Column(name="LAST_UPDATED_BY")
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
@@ -92,7 +92,6 @@ public class User {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    @Column(name="CREATED_DATE")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -101,7 +100,6 @@ public class User {
         this.createdDate = createdDate;
     }
 
-    @Column(name="CREATED_BY")
     public String getCreatedBy() {
         return createdBy;
     }
