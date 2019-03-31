@@ -8,12 +8,6 @@ import java.util.Date;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-   /* @GeneratedValue(strategy= GenerationType.TABLE, generator = "user_table_generator")
-    @TableGenerator(name = "user_table_generator",
-            table = "ifinances_keys",pkColumnName = "PK_NAME",pkColumnValue ="PK_VALUE")*/
-    //for oracle ; not possible in mysql
-    /*@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "user_seq")
-    @SequenceGenerator(name = "user_seq",sequenceName = "USER_ID_SEQ")*/
     @Column(name="USER_ID")
     private Long userId;
 
@@ -41,6 +35,17 @@ public class User {
 
     @Column(name="CREATED_BY", updatable = false)
     private String createdBy;
+
+    @Transient
+    private boolean valid;
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
 
     public Long getUserId() {
         return userId;
