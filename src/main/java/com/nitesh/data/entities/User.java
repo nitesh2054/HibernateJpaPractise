@@ -5,6 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="finances_user")
+//Access Property anotation
 @Access(value = AccessType.PROPERTY)
 public class User {
 
