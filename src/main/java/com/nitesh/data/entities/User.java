@@ -2,7 +2,7 @@ package com.nitesh.data.entities;
 
 import javax.persistence.*;
 import java.util.Date;
-
+//
 @Entity
 @Table(name="finances_user")
 public class User {
