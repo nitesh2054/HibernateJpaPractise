@@ -1,10 +1,7 @@
 package com.nitesh.data.entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name="BANK")
@@ -41,8 +38,9 @@ public class Bank {
 
 	@ElementCollection
 	@CollectionTable(name = "BANK_CONTACT", joinColumns = @JoinColumn(name="BANK_ID"))
+    @MapKeyColumn(name = "POSITION_TYPE")
 	@Column(name = "NAME")
-	List <String> contacts = new ArrayList<String>();
+    Map<String,String> contacts = new HashMap<String, String>();
 
 	public Long getBankId() {
 		return bankId;
@@ -140,11 +138,11 @@ public class Bank {
 		this.international = international;
 	}
 
-	public List<String> getContacts() {
+	public Map<String, String> getContacts() {
 		return contacts;
 	}
 
-	public void setContacts(List<String> contacts) {
+	public void setContacts(Map<String, String> contacts) {
 		this.contacts = contacts;
 	}
 }
