@@ -1,5 +1,6 @@
 package com.nitesh.data;
 
+import com.nitesh.data.entities.Bank;
 import com.nitesh.data.entities.TimeTest;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -16,7 +17,7 @@ public class HibernateUtil {
         try {
             Configuration configuration = new Configuration();
             StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder();
-            configuration.addAnnotatedClass(TimeTest.class);
+            configuration.addAnnotatedClass(User.class);
             //remove configure for .properties file
             configuration.configure("hibernate.cfg.xml");
             return configuration
