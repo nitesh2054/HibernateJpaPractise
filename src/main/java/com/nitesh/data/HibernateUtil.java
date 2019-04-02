@@ -17,7 +17,7 @@ public class HibernateUtil {
         try {
             Configuration configuration = new Configuration();
             StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder();
-            configuration.addAnnotatedClass(User.class);
+            configuration.addAnnotatedClass(Bank.class);
             //remove configure for .properties file
             configuration.configure("hibernate.cfg.xml");
             return configuration

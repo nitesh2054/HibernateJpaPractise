@@ -14,25 +14,22 @@ public class Application {
 
         try {
             Transaction transaction = session.beginTransaction();
+            Bank bank = new Bank();
+            bank.setName("Federal Trust");
+            bank.setAddressLine1("33 Wall Street");
+            bank.setAddressLine2("Suite 233");
+            bank.setCity("New York");
+            bank.setState("NY");
+            bank.setZipCode("12345");
+            bank.setInternational(false);
+            bank.setCreatedBy("Kevin");
+            bank.setCreatedDate(new Date());
+            bank.setLastUpdatedBy("Kevin");
+            bank.setLastUpdatedDate(new Date());
+            bank.getContacts().add("Joe");
+            bank.getContacts().add("Mary");
 
-            User user = new User();
-            Address address = new Address();
-            user.setBirthDate(new Date());
-            user.setCreatedDate(new Date());
-            user.setCreatedBy("Kevin");
-            user.setEmailAddress("kmb3");
-            user.setFirstName("Kevin");
-            user.setLastName("bowersox");
-            user.setLastUpdatedDate(new Date());
-            user.setLastUpdatedBy("kmb");
-            address.setAddressLine1("Line 1");
-            address.setAddressLine2("Line 2");
-            address.setCity("Philadelphia");
-            address.setState("PA");
-            address.setZipCode("12345");
-            user.setAddress(address);
-
-            session.save(user);
+            session.save(bank);
 
             transaction.commit();
 

@@ -1,7 +1,10 @@
 package com.nitesh.data.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="BANK")
@@ -22,17 +25,24 @@ public class Bank {
 	@Column(name = "IS_INTERNATIONAL")
 	private boolean international;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LAST_UPDATED_DATE")
 	private Date lastUpdatedDate;
 
 	@Column(name = "LAST_UPDATED_BY")
 	private String lastUpdatedBy;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE")
 	private Date createdDate;
 
 	@Column(name = "CREATED_BY")
 	private String createdBy;
+
+	@ElementCollection
+	@CollectionTable(name = "BANK_CONTACT", joinColumns = @JoinColumn(name="BANK_ID"))
+	@Column(name = "NAME")
+	List <String> contacts = new ArrayList<String>();
 
 	public Long getBankId() {
 		return bankId;
@@ -128,5 +138,13 @@ public class Bank {
 
 	public void setInternational(boolean international) {
 		this.international = international;
+	}
+
+	public List<String> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<String> contacts) {
+		this.contacts = contacts;
 	}
 }
