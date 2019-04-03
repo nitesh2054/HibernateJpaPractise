@@ -1,14 +1,10 @@
 package com.nitesh.data;
 
-import com.nitesh.data.entities.Bank;
-import com.nitesh.data.entities.Credential;
-import com.nitesh.data.entities.TimeTest;
+import com.nitesh.data.entities.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-
-import com.nitesh.data.entities.User;
 
 public class HibernateUtil {
 
@@ -20,6 +16,8 @@ public class HibernateUtil {
             StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder();
             configuration.addAnnotatedClass(User.class);
             configuration.addAnnotatedClass(Credential.class);
+            configuration.addAnnotatedClass(Account.class);
+            configuration.addAnnotatedClass(Transaction.class);
             //remove configure for .properties file
             configuration.configure("hibernate.cfg.xml");
             return configuration
