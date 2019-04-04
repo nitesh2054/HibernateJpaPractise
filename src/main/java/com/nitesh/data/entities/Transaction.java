@@ -3,12 +3,7 @@ package com.nitesh.data.entities;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "TRANSACTION")
@@ -18,6 +13,10 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TRANSACTION_ID")
 	private Long transactionId;
+
+	@ManyToOne
+	@JoinColumn(name = "ACCOUNT_ID")
+	private Account account;
 
 	@Column(name = "TRANSACTION_TYPE")
 	private String transactionType;
@@ -55,6 +54,14 @@ public class Transaction {
 
 	public void setTransactionId(Long transactionId) {
 		this.transactionId = transactionId;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public String getTransactionType() {
