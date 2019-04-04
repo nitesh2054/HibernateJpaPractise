@@ -14,7 +14,7 @@ public class Transaction {
 	@Column(name = "TRANSACTION_ID")
 	private Long transactionId;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ACCOUNT_ID")
 	private Account account;
 

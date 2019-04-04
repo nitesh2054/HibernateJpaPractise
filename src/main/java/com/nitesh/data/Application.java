@@ -16,15 +16,19 @@ public class Application {
             // session.beginTransaction();
             session.getTransaction().begin();
 
+
             Account account = createNewAccount();
-            account.getTransactions().add(createNewBeltPurchase(account));
-            account.getTransactions().add(createShoePurchase(account));
-            session.save(account);
+
+            Budget budget = new Budget();
+            budget.setGoalAmount(new BigDecimal("10000.00"));
+            budget.setName("Emergency Fund");
+            budget.setPeriod("Yearly");
+
+            budget.getTransactions().add(createNewBeltPurchase(account));
+            budget.getTransactions().add(createShoePurchase(account));
+
+            session.save(budget);
             session.getTransaction().commit();
-
-            Transaction dbTransaction = (Transaction) session.get(Transaction.class,account.getTransactions().get(0).getTransactionId());
-            System.out.println(dbTransaction.getAccount().getName());
-
             session.close();
 
         } catch (Exception e) {
