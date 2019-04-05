@@ -97,6 +97,14 @@ public class Bank {
 		this.address.setZipCode(zipCode);
 	}
 
+	public String getAddressType(){
+	    return this.address.getAddressType();
+    }
+
+	public void setAddressType(String addressType){
+	    this.address.setAddressType(addressType);
+    }
+
 	public Date getLastUpdatedDate() {
 		return lastUpdatedDate;
 	}

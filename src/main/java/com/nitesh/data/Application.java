@@ -14,18 +14,18 @@ public class Application {
 
         try {
             org.hibernate.Transaction transaction = session.beginTransaction();
-            Bank bank = session.get(Bank.class, 1L);
+            Bank detachedBank = session.get(Bank.class, 1L);
             transaction.commit();
             session.close();
+
+            Bank transientBank = createBank();
 
             Session session2 = HibernateUtil.getSessionFactory().openSession();
             org.hibernate.Transaction transaction2 = session2.beginTransaction();
 
-            System.out.println(session2.contains(bank));
-            session2.update(bank);
-            bank.setName("Test Bank");
-            System.out.println("Method Invoked");
-            System.out.println(session2.contains(bank));
+            session2.saveOrUpdate(transientBank);
+            session2.saveOrUpdate(detachedBank);
+            detachedBank.setName("Test Bank 2");
 
             transaction2.commit();
             session2.close();
@@ -36,6 +36,23 @@ public class Application {
            // session.close();
             HibernateUtil.getSessionFactory().close();
         }
+    }
+
+    private static Bank createBank() {
+        Bank bank = new Bank();
+        bank.setName("First United Federal");
+        bank.setAddressLine1("103 Washington Plaza");
+        bank.setAddressLine2("Suite 332");
+        bank.setAddressType("PRIMARY");
+        bank.setCity("New York");
+        bank.setCreatedBy("Kevin Bowersox");
+        bank.setCreatedDate(new Date());
+        bank.setInternational(false);
+        bank.setLastUpdatedBy("Kevin Bowersox");
+        bank.setLastUpdatedDate(new Date());
+        bank.setState("NY");
+        bank.setZipCode("10000");
+        return bank;
     }
 
     private static User createUser() {
