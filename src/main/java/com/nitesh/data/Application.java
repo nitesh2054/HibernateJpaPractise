@@ -14,19 +14,26 @@ import java.util.Date;
 
 public class Application {
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("infinite-finances");
-        EntityManager em = emf.createEntityManager();
+        EntityManagerFactory factory = null;
+        EntityManager em = null;
+        EntityTransaction tx = null;
 
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
+        try{
+            factory = Persistence.createEntityManagerFactory("infinite-finances");
+            em = factory.createEntityManager();
+            tx=em.getTransaction();
+            tx.begin();
 
-        Bank bank = createBank();
-        em.persist(bank);
+            Bank bank = createBank();
+            em.persist(bank);
 
-        tx.commit();
-
-        em.close();
-        emf.close();
+            tx.commit();
+        }catch (Exception e){
+            tx.rollback();
+        }finally {
+            factory.close();
+            em.close();
+        }
     }
 
     private static Bank createBank() {
