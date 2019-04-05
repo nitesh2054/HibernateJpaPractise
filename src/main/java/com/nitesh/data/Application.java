@@ -15,10 +15,12 @@ public class Application {
         try {
             org.hibernate.Transaction transaction = session.beginTransaction();
 
-            Bank bank = (Bank) session.get(Bank.class, 1L);
-            bank.setName("New Hope Bank");
-            bank.setLastUpdatedBy("Kevin Bowersox");
-            bank.setLastUpdatedDate(new Date());
+            Bank bank = session.get(Bank.class, 1L);
+            
+            session.contains(bank);
+            session.delete(bank);
+            System.out.println("Method Invoked");
+            session.contains(bank);
 
             transaction.commit();
         } catch (Exception e) {
