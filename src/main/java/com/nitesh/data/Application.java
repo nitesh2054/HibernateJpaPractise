@@ -3,6 +3,10 @@ package com.nitesh.data;
 import com.nitesh.data.entities.*;
 import org.hibernate.Session;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -10,27 +14,19 @@ import java.util.Date;
 
 public class Application {
     public static void main(String[] args) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        org.hibernate.Transaction transaction = session.beginTransaction();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("infinite-finances");
+        EntityManager em = emf.createEntityManager();
 
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
 
-        try {
-            Bank bank = session.get(Bank.class, 1L);
-            bank.setName("Something Different");
-            System.out.println("Calling flush");
-            session.flush();
+        Bank bank = createBank();
+        em.persist(bank);
 
-            bank.setAddressLine1("Another address line");
-            System.out.println("Calling commit");
-            transaction.commit();
+        tx.commit();
 
-        } catch (Exception e) {
-            transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-            HibernateUtil.getSessionFactory().close();
-        }
+        em.close();
+        emf.close();
     }
 
     private static Bank createBank() {
