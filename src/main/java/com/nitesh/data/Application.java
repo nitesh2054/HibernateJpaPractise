@@ -5,6 +5,7 @@ import org.hibernate.Session;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Application {
@@ -16,21 +17,32 @@ public class Application {
             // session.beginTransaction();
             session.getTransaction().begin();
 
-
             Account account = createNewAccount();
+            Account account2 = createNewAccount();
 
-            Budget budget = new Budget();
-            budget.setGoalAmount(new BigDecimal("10000.00"));
-            budget.setName("Emergency Fund");
-            budget.setPeriod("Yearly");
+            User user = createUser();
+            User user2 = createUser();
 
-            budget.getTransactions().add(createNewBeltPurchase(account));
-            budget.getTransactions().add(createShoePurchase(account));
 
-            session.save(budget);
+            account.getUsers().add(user);
+            account.getUsers().add(user2);
+            user.getAccounts().add(account);
+            user2.getAccounts().add(account);
+
+
+            account2.getUsers().add(user);
+            account2.getUsers().add(user2);
+            user.getAccounts().add(account2);
+            user.getAccounts().add(account2);
+
+            session.save(user);
+            session.save(user2);
             session.getTransaction().commit();
-            session.close();
 
+           /* Account dbAccount = session.get(Account.class, account.getAccountId());
+            System.out.println(dbAccount.getUsers().iterator().next().getEmailAddress());*/
+            User dbUser = session.get(User.class, user.getUserId());
+            System.out.println(dbUser.getAccounts().iterator().next().getName());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -38,6 +50,42 @@ public class Application {
             HibernateUtil.getSessionFactory().close();
         }
     }
+
+    private static User createUser() {
+        User user = new User();
+        Address address = createAddress();
+        user.setAddress(Arrays.asList(new Address[]{createAddress()}));
+        user.setBirthDate(new Date());
+        user.setCreatedBy("Kevin Bowersox");
+        user.setCreatedDate(new Date());
+        user.setCredential(createCredential(user));
+        user.setEmailAddress("test@test.com");
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.setLastUpdatedBy("system");
+        user.setLastUpdatedDate(new Date());
+        return user;
+    }
+
+    private static Credential createCredential(User user) {
+        Credential credential = new Credential();
+        credential.setUser(user);
+        credential.setUsername("test_username");
+        credential.setPassword("test_password");
+        return credential;
+    }
+
+    private static Address createAddress() {
+        Address address = new Address();
+        address.setAddressLine1("101 Address Line");
+        address.setAddressLine2("102 Address Line");
+        address.setCity("New York");
+        address.setState("PA");
+        address.setZipCode("10000");
+        //address.setAddressType("PRIMARY");
+        return address;
+    }
+
 
     private static Transaction createNewBeltPurchase(Account account) {
         Transaction beltPurchase = new Transaction();

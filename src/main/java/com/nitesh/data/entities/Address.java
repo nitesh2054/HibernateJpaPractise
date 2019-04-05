@@ -16,6 +16,9 @@ public class Address {
     @Column(name = "ZIP_CODE")
     String zipCode;
 
+    @Column(name = "ADDRESS_TYPE")
+    private String addressType;
+
     public Address() {
     }
 
@@ -57,5 +60,13 @@ public class Address {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    public String getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(String addressType) {
+        this.addressType = addressType;
     }
 }
