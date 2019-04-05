@@ -11,38 +11,22 @@ import java.util.Date;
 public class Application {
     public static void main(String[] args) {
         Session session = HibernateUtil.getSessionFactory().openSession();
+        Account account = createNewAccount();
+        Transaction transc1 = createNewBeltPurchase(account);
+        Transaction transc2 = createShoePurchase(account);
+        account.getTransactions().add(transc1);
+        account.getTransactions().add(transc2);
 
+        System.out.println(session.contains(account));
+        System.out.println(session.contains(transc1));
+        System.out.println(session.contains(transc2));
         try {
-            //session.beginTransaction();
-            // session.beginTransaction();
-            session.getTransaction().begin();
-
-            Account account = createNewAccount();
-            Account account2 = createNewAccount();
-
-            User user = createUser();
-            User user2 = createUser();
-
-
-            account.getUsers().add(user);
-            account.getUsers().add(user2);
-            user.getAccounts().add(account);
-            user2.getAccounts().add(account);
-
-
-            account2.getUsers().add(user);
-            account2.getUsers().add(user2);
-            user.getAccounts().add(account2);
-            user.getAccounts().add(account2);
-
-            session.save(user);
-            session.save(user2);
-            session.getTransaction().commit();
-
-           /* Account dbAccount = session.get(Account.class, account.getAccountId());
-            System.out.println(dbAccount.getUsers().iterator().next().getEmailAddress());*/
-            User dbUser = session.get(User.class, user.getUserId());
-            System.out.println(dbUser.getAccounts().iterator().next().getName());
+            org.hibernate.Transaction transaction = session.beginTransaction();
+            session.save(account);
+            System.out.println(session.contains(account));
+            System.out.println(session.contains(transc1));
+            System.out.println(session.contains(transc2));
+            transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
