@@ -19,6 +19,7 @@ public class HibernateUtil {
             configuration.addAnnotatedClass(Account.class);
             configuration.addAnnotatedClass(Transaction.class);
             configuration.addAnnotatedClass(Budget.class);
+            configuration.addAnnotatedClass(Bank.class);
             //remove configure for .properties file
             configuration.configure("hibernate.cfg.xml");
             return configuration

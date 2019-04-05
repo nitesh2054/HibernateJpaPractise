@@ -11,21 +11,14 @@ import java.util.Date;
 public class Application {
     public static void main(String[] args) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Account account = createNewAccount();
-        Transaction transc1 = createNewBeltPurchase(account);
-        Transaction transc2 = createShoePurchase(account);
-        account.getTransactions().add(transc1);
-        account.getTransactions().add(transc2);
 
-        System.out.println(session.contains(account));
-        System.out.println(session.contains(transc1));
-        System.out.println(session.contains(transc2));
         try {
             org.hibernate.Transaction transaction = session.beginTransaction();
-            session.save(account);
-            System.out.println(session.contains(account));
-            System.out.println(session.contains(transc1));
-            System.out.println(session.contains(transc2));
+            Bank bank = (Bank) session.load(Bank.class, 1L);
+            //bank = (Bank) session.get(Bank.class, 1L);
+            System.out.println("Method Executed");
+            System.out.println(bank.getName());
+            System.out.println("Method Executed");
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

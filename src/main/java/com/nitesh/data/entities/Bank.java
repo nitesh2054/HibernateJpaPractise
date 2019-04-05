@@ -7,7 +7,6 @@ import java.util.*;
 @Table(name="BANK")
 public class Bank {
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "BANK_ID")
