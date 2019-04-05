@@ -11,29 +11,24 @@ import java.util.Date;
 public class Application {
     public static void main(String[] args) {
         Session session = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Transaction transaction = session.beginTransaction();
+
 
         try {
-            org.hibernate.Transaction transaction = session.beginTransaction();
-            Bank detachedBank = session.get(Bank.class, 1L);
+            Bank bank = session.get(Bank.class, 1L);
+            bank.setName("Something Different");
+            System.out.println("Calling flush");
+            session.flush();
+
+            bank.setAddressLine1("Another address line");
+            System.out.println("Calling commit");
             transaction.commit();
-            session.close();
-
-            Bank transientBank = createBank();
-
-            Session session2 = HibernateUtil.getSessionFactory().openSession();
-            org.hibernate.Transaction transaction2 = session2.beginTransaction();
-
-            session2.saveOrUpdate(transientBank);
-            session2.saveOrUpdate(detachedBank);
-            detachedBank.setName("Test Bank 2");
-
-            transaction2.commit();
-            session2.close();
 
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
         } finally {
-           // session.close();
+            session.close();
             HibernateUtil.getSessionFactory().close();
         }
     }
