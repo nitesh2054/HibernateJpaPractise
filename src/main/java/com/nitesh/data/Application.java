@@ -24,12 +24,15 @@ public class Application {
             tx=em.getTransaction();
             tx.begin();
 
-            Bank bank = createBank();
-            em.persist(bank);
+            //Bank bank = em.find(Bank.class,1L);
+            Bank bank = em.getReference(Bank.class,1L);//similar to load
+            System.out.println(em.contains(bank));
+            System.out.println(bank.getName());
 
             tx.commit();
         }catch (Exception e){
             tx.rollback();
+            e.printStackTrace();
         }finally {
             factory.close();
             em.close();
