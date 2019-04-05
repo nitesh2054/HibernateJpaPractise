@@ -24,10 +24,8 @@ public class Application {
             tx=em.getTransaction();
             tx.begin();
 
-            //Bank bank = em.find(Bank.class,1L);
-            Bank bank = em.getReference(Bank.class,1L);//similar to load
-            System.out.println(em.contains(bank));
-            System.out.println(bank.getName());
+            Bank bank = em.find(Bank.class,1L);
+            bank.setName("Another Demonstration");
 
             tx.commit();
         }catch (Exception e){
