@@ -25,9 +25,12 @@ public class Application {
             tx.begin();
 
             Bank bank = em.find(Bank.class,1L);
-            bank.setName("Another Demonstration");
+            System.out.println(em.contains(bank));
+            em.remove(bank);
+            System.out.println(em.contains(bank));
 
             tx.commit();
+
         }catch (Exception e){
             tx.rollback();
             e.printStackTrace();
